@@ -21,7 +21,7 @@ This application fetches and displays weather forecast information for London in
 ## Screenshots
 
 ![WeatherApp](https://github.com/kyemets/angular-weather-app/assets/61251118/e4d3dc9c-521f-4e3c-9463-fa10afcc2a4d)
-![WeatherApp · 1 05pm · 02-29](https://github.com/kyemets/angular-weather-app/assets/61251118/32d9113a-1015-440f-ba48-b5fbecccc7f4)
+![WeatherApp · 2 29pm · 02-29](https://github.com/kyemets/angular-weather-app/assets/61251118/55a956d9-eb3e-493c-a164-4b2b836eb877)
 ![WeatherApp · 1 05pm · 02-29 (1)](https://github.com/kyemets/angular-weather-app/assets/61251118/30d59669-0fa2-4eba-91c2-63bb9e5cccc0)
 
 
