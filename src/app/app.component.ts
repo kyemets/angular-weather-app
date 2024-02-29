@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core'
+import { Component } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
 import { WeatherServiceComponent } from './components/weather-service/weather-service.component'
 import { WeatherTableComponent } from './components/weather-table/weather-table.component'

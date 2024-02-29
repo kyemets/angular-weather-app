@@ -18,6 +18,12 @@ This application fetches and displays weather forecast information for London in
 - **REST APIs**: Utilizes APIs from [Open Meteo](https://open-meteo.com/en/docs)
 - **Heat Index Formula**: Implements the formula from [weather.gov](https://www.weather.gov/media/epz/wxcalc/heatIndex.pdf)
 
+## Screenshots
+
+![WeatherApp](https://github.com/kyemets/angular-weather-app/assets/61251118/e4d3dc9c-521f-4e3c-9463-fa10afcc2a4d)
+![WeatherApp · 1 05pm · 02-29](https://github.com/kyemets/angular-weather-app/assets/61251118/32d9113a-1015-440f-ba48-b5fbecccc7f4)
+![WeatherApp · 1 05pm · 02-29 (1)](https://github.com/kyemets/angular-weather-app/assets/61251118/30d59669-0fa2-4eba-91c2-63bb9e5cccc0)
+
 
 ## Installation
 

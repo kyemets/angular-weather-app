@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { LineChartComponent } from '../line-chart/line-chart.component'
+import { londonCoordinates } from '../../../../config'
 
 @Component({
     selector: 'app-weather-table',
@@ -30,7 +31,7 @@ import { LineChartComponent } from '../line-chart/line-chart.component'
     ],
 })
 export class WeatherTableComponent implements OnInit {
-    pageSize: number = 5 // Set default page size to 5
+    pageSize: number = 5
     @Input() searchText: string = ''
     forecastData: WeatherData | undefined
     filteredForecastData: MatTableDataSource<any> = new MatTableDataSource<any>(
@@ -58,9 +59,8 @@ export class WeatherTableComponent implements OnInit {
     constructor(private weatherService: WeatherService) {}
 
     ngOnInit(): void {
-        // TODO: London location
-        this.getWeatherForecast(52.52, 13.41)
-        this.getHistoricalWeather(52.52, 13.41, '2024-02-13', '2024-02-27')
+        this.getWeatherForecast(londonCoordinates.latitude, londonCoordinates.longitude)
+        this.getHistoricalWeather(londonCoordinates.latitude, londonCoordinates.longitude, '2024-02-13', '2024-02-27')
         this.extractChartData()
     }
 
@@ -69,7 +69,7 @@ export class WeatherTableComponent implements OnInit {
             this.filteredForecastData.paginator = this.paginator
             this.filteredForecastData.paginator.pageSize = this.pageSize
         } else {
-            // Handle the case where paginator is not yet available
+            console.log('')
         }
     }
 

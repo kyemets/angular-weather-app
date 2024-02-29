@@ -12,6 +12,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { MatSort } from '@angular/material/sort'
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { HeatIndexCalculatorComponent } from '../heat-index-calculator/heat-index-calculator.component'
+import { londonCoordinates } from '../../../config'
 
 @Component({
     selector: 'app-my-tabs',
@@ -62,9 +63,7 @@ export class MyTabsComponent implements OnInit {
     constructor(private weatherService: WeatherService) {}
 
     ngOnInit(): void {
-        // TODO: London location
-        this.getWeatherForecast(52.52, 13.41)
-        this.getHistoricalWeather(52.52, 13.41, '2024-02-13', '2024-02-27')
+        this.getWeatherForecast(londonCoordinates.latitude, londonCoordinates.longitude)
         this.extractChartData()
     }
 
@@ -80,7 +79,6 @@ export class MyTabsComponent implements OnInit {
                                 this.forecastData?.hourly.temperature_2m[
                                     index
                                 ] ?? null,
-                            // weatherState: this.forecastData?.weather
                             surfacePressure:
                                 this.forecastData?.hourly.surface_pressure[
                                     index
@@ -99,28 +97,6 @@ export class MyTabsComponent implements OnInit {
                 console.error('Error fetching weather forecast:', error)
             },
         )
-    }
-
-    // TODO: add this
-    getHistoricalWeather(
-        latitude: number,
-        longitude: number,
-        startDate: string,
-        endDate: string,
-    ) {
-        this.weatherService
-            .getHistoricalWeather(latitude, longitude, startDate, endDate)
-            .subscribe(
-                (data: WeatherData) => {
-                    // ...
-                },
-                (error: any) => {
-                    console.error(
-                        'Error fetching historical weather forecast:',
-                        error,
-                    )
-                },
-            )
     }
 
     pageChanged(event: any): void {
