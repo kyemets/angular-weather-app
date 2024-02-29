@@ -1,0 +1,28 @@
+/* weather-table.component.css */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+thead th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+tbody td:first-child {
+  font-weight: bold;
+}
+
+tbody tr:hover {
+  background-color: #f9f9f9;
+}

@@ -1,0 +1,17 @@
+<!-- weather-service.component.html -->
+<div *ngIf="forecastData && forecastData.hourly">
+  <table>
+    <thead>
+      <tr>
+        <th>Weather</th>
+        <th>Service</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr *ngFor="let forecast of forecastData.hourly.time; let i = index">
+        <td>{{ forecastData?.hourly?.time[i] }}</td>
+        <td>{{ forecastData?.hourly?.temperature_2m[i] }}</td>
+      </tr> -->
+    </tbody>
+  </table>
+</div>

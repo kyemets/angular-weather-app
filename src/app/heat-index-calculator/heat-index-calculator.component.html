@@ -1,0 +1,17 @@
+<div>
+  <label for="temperature">Temperature:</label>
+  <input type="number" id="temperature" [(ngModel)]="temperature">
+  <select [(ngModel)]="temperatureUnit">
+    <option value="C">°C</option>
+    <option value="F">°F</option>
+  </select>
+</div>
+<div>
+  <label for="relativeHumidity">Relative Humidity (%):</label>
+  <input type="number" id="relativeHumidity" [(ngModel)]="relativeHumidity">
+</div>
+<button (click)="calculateHeatIndex()">Calculate Heat Index</button>
+<div *ngIf="heatIndex !== undefined">
+  <p>Heat Index: {{ heatIndex.toFixed(2) }} {{ temperatureUnit }}</p>
+  <p>Heat Index cannot be calculated for temperatures less than 80°F or 26.7°C.</p>
+</div>
