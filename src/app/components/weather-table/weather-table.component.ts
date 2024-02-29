@@ -30,7 +30,6 @@ import { LineChartComponent } from '../line-chart/line-chart.component'
     ],
 })
 export class WeatherTableComponent implements OnInit {
-    //@Input() pageSize: number = 5
     pageSize: number = 5 // Set default page size to 5
     @Input() searchText: string = ''
     forecastData: WeatherData | undefined
@@ -40,6 +39,7 @@ export class WeatherTableComponent implements OnInit {
     displayedColumns: string[] = [
         'datetime',
         'temperature',
+        'historicalWeather',
         'surfacePressure',
         'relativeHumidity',
     ]
@@ -50,6 +50,7 @@ export class WeatherTableComponent implements OnInit {
     labels: string[] = []
     lineChartOptions: any = {}
     lineChartLegend: boolean = true
+    historicalData: WeatherData | undefined;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator
     @ViewChild(MatSort) sort!: MatSort
@@ -75,37 +76,15 @@ export class WeatherTableComponent implements OnInit {
     getWeatherForecast(latitude: number, longitude: number): void {
         this.weatherService.getWeatherForecast(latitude, longitude).subscribe(
             (data: WeatherData) => {
-                this.forecastData = data
-                if (this.forecastData) {
-                    this.filteredForecastData.data =
-                        this.forecastData.hourly.time.map((time, index) => ({
-                            datetime: time,
-                            temperature:
-                                this.forecastData?.hourly.temperature_2m[
-                                    index
-                                ] ?? null,
-                            // weatherState: this.forecastData?.weather
-                            surfacePressure:
-                                this.forecastData?.hourly.surface_pressure[
-                                    index
-                                ] ?? null,
-                            relativeHumidity:
-                                this.forecastData?.current
-                                    .relative_humidity_2m ?? null,
-                        }))
-                    this.filteredForecastData.paginator = this.paginator
-                    this.filteredForecastData.sort = this.sort
-                } else {
-                    this.filteredForecastData.data = []
-                }
+                this.forecastData = data;
+                this.updateFilteredData();
             },
             (error: any) => {
-                console.error('Error fetching weather forecast:', error)
+                console.error('Error fetching weather forecast:', error);
             },
-        )
+        );
     }
 
-    // TODO: add this
     getHistoricalWeather(
         latitude: number,
         longitude: number,
@@ -116,41 +95,50 @@ export class WeatherTableComponent implements OnInit {
             .getHistoricalWeather(latitude, longitude, startDate, endDate)
             .subscribe(
                 (data: WeatherData) => {
-                    // ...
+                    this.historicalData = data;
+                    this.updateFilteredData();
                 },
                 (error: any) => {
-                    console.error(
-                        'Error fetching historical weather forecast:',
-                        error,
-                    )
+                    console.error('Error fetching historical weather forecast:', error);
                 },
-            )
+            );
     }
 
-    pageChanged(event: any): void {
-        const startIndex = event.pageIndex * event.pageSize
-        const endIndex = startIndex + event.pageSize
-        if (this.forecastData?.hourly) {
-            const data = this.forecastData.hourly.time
-                .slice(startIndex, endIndex)
-                .map((time, index) => ({
-                    datetime: time,
-                    temperature:
-                        this.forecastData?.hourly.temperature_2m[
-                            startIndex + index
-                        ] ?? null,
-                    surfacePressure:
-                        this.forecastData?.hourly.surface_pressure[
-                            startIndex + index
-                        ] ?? null,
-                    relativeHumidity:
-                        this.forecastData?.current.relative_humidity_2m ?? null,
-                }))
-            this.filteredForecastData.data = data
-        } else {
-            this.filteredForecastData.data = []
-        }
+    updateFilteredData(): void {
+      if (this.forecastData && this.forecastData.hourly && this.historicalData && this.historicalData.hourly) {
+          const combinedData = this.forecastData.hourly.time.map((time, index) => ({
+              datetime: time,
+              temperature: this.forecastData?.hourly.temperature_2m[index] ?? null,
+              historicalWeather: this.historicalData?.hourly.temperature_2m[index] ?? null,
+              surfacePressure: this.forecastData?.hourly.surface_pressure[index] ?? null,
+              relativeHumidity: this.forecastData?.current.relative_humidity_2m ?? null,
+          }));
+
+          this.filteredForecastData.data = combinedData;
+      } else {
+          this.filteredForecastData.data = [];
+      }
+  }
+
+  pageChanged(event: any): void {
+    const startIndex = event.pageIndex * event.pageSize;
+    const endIndex = startIndex + event.pageSize;
+    if (this.forecastData?.hourly && this.historicalData?.hourly) {
+        const data = this.forecastData.hourly.time
+            .slice(startIndex, endIndex)
+            .map((time, index) => ({
+                datetime: time,
+                temperature: this.forecastData?.hourly.temperature_2m[startIndex + index] ?? null,
+                historicalWeather: this.historicalData?.hourly.temperature_2m[startIndex + index] ?? null,
+                surfacePressure: this.forecastData?.hourly.surface_pressure[startIndex + index] ?? null,
+                relativeHumidity: this.forecastData?.current.relative_humidity_2m ?? null,
+            }));
+        this.filteredForecastData.data = data;
+    } else {
+        this.filteredForecastData.data = [];
     }
+}
+
 
     extractChartData(): void {
         if (this.forecastData && this.forecastData.hourly) {

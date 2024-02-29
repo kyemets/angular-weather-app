@@ -1,75 +1,55 @@
 <div *ngIf="forecastData && forecastData.hourly">
-    <!-- <mat-form-field>
-    <input matInput type="text" [(ngModel)]="searchText" placeholder="Search">
-  </mat-form-field> -->
+    <mat-table
+        [dataSource]="filteredForecastData"
+        matSort
+        class="mat-elevation-z8"
+    >
+        <ng-container matColumnDef="datetime">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Datetime</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">{{
+                row.datetime | date: 'medium'
+            }}</mat-cell>
+        </ng-container>
 
-    <div class="custom-table">
-        <mat-table
-            [dataSource]="filteredForecastData"
-            matSort
-            class="mat-elevation-z8"
-        >
-            <ng-container matColumnDef="datetime">
-                <mat-header-cell *matHeaderCellDef mat-sort-header
-                    >Datetime</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{
-                    row.datetime | date: 'medium'
-                }}</mat-cell>
-            </ng-container>
+        <ng-container matColumnDef="historicalWeather">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Historical Weather</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">{{ row.historicalWeather }}</mat-cell>
+        </ng-container>
 
-            <ng-container matColumnDef="weatherState">
-                <mat-header-cell *matHeaderCellDef mat-sort-header
-                    >Weather State</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{
-                    row.weatherState
-                }}</mat-cell>
-            </ng-container>
+        <ng-container matColumnDef="temperature">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Temperature (°C)</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">{{ row.temperature }}</mat-cell>
+        </ng-container>
 
-            <ng-container matColumnDef="temperature">
-                <mat-header-cell *matHeaderCellDef mat-sort-header
-                    >Temperature (°C)</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{ row.temperature }}</mat-cell>
-            </ng-container>
+        <ng-container matColumnDef="surfacePressure">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Surface Pressure (hPa)</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">{{ row.surfacePressure }}</mat-cell>
+        </ng-container>
 
-            <ng-container matColumnDef="surfacePressure">
-                <mat-header-cell *matHeaderCellDef mat-sort-header
-                    >Surface Pressure (hPa)</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{
-                    row.surfacePressure
-                }}</mat-cell>
-            </ng-container>
+        <ng-container matColumnDef="relativeHumidity">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Relative Humidity (%)</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">{{
+                row.relativeHumidity
+            }}</mat-cell>
+        </ng-container>
 
-            <ng-container matColumnDef="relativeHumidity">
-                <mat-header-cell *matHeaderCellDef mat-sort-header
-                    >Relative Humidity (%)</mat-header-cell
-                >
-                <mat-cell *matCellDef="let row">{{
-                    row.relativeHumidity
-                }}</mat-cell>
-            </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
 
-            <mat-header-row
-                *matHeaderRowDef="displayedColumns"
-            ></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-        </mat-table>
-
-        <mat-paginator
-            [pageSizeOptions]="[5, 10, 25]"
-            [pageSize]="pageSize"
-            (page)="pageChanged($event)"
-        ></mat-paginator>
-    </div>
-    <!--
-<app-line-chart
-  *ngIf="forecastData"
-  [datasets]="chartData.datasets"
-  [labels]="labels"
-  [lineChartOptions]="lineChartOptions"
-  [lineChartLegend]="lineChartLegend">
-</app-line-chart> -->
+    <mat-paginator
+        [pageSizeOptions]="[5, 10, 25, 50, 100, 125, 150]"
+        [pageSize]="pageSize"
+        (page)="pageChanged($event)"
+    ></mat-paginator>
 </div>
