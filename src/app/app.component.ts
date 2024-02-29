@@ -7,7 +7,9 @@ import { NgChartsModule } from 'ng2-charts'
 import { LineChartComponent } from './components/line-chart/line-chart.component'
 import { HeatIndexCalculatorComponent } from './heat-index-calculator/heat-index-calculator.component'
 import { MatPaginatorModule } from '@angular/material/paginator'
-import { HostBinding } from '@angular/core';
+import { HostBinding } from '@angular/core'
+import { MyToolbarComponent } from './my-toolbar/my-toolbar.component'
+import { MyTabsComponent } from './my-tabs/my-tabs.component'
 
 @Component({
     selector: 'app-root',
@@ -15,27 +17,28 @@ import { HostBinding } from '@angular/core';
     imports: [
         HttpClientModule,
         RouterOutlet,
+        MyTabsComponent,
+        MyToolbarComponent,
         WeatherServiceComponent,
         WeatherTableComponent,
         HeatIndexCalculatorComponent,
         NgChartsModule,
         LineChartComponent,
         NgChartsModule,
-        MatPaginatorModule
+        MatPaginatorModule,
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
 })
 export class AppComponent {
     title = 'weather-app'
-    darkMode: boolean = false;
+    darkMode: boolean = false
 
     @HostBinding('class') get themeMode() {
-      return this.darkMode ? 'theme-dark' : 'theme-light';
+        return this.darkMode ? 'theme-dark' : 'theme-light'
     }
 
-toggleDarkMode() {
-  this.darkMode = !this.darkMode;
-}
-
+    toggleDarkMode() {
+        this.darkMode = !this.darkMode
+    }
 }

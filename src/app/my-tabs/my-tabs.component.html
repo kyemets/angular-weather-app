@@ -1,0 +1,24 @@
+<mat-tab-group dynamicHeight>
+    <mat-tab label="Weather table">
+        <div class="example-large-box mat-elevation-z4">
+            <app-weather-table></app-weather-table>
+        </div>
+    </mat-tab>
+    <mat-tab label="Line chart">
+        <div class="example-large-box mat-elevation-z4">
+            <app-line-chart
+                *ngIf="forecastData"
+                [datasets]="chartData.datasets"
+                [labels]="labels"
+                [lineChartOptions]="lineChartOptions"
+                [lineChartLegend]="lineChartLegend"
+            >
+            </app-line-chart>
+        </div>
+    </mat-tab>
+    <mat-tab label="Heat Index Calculator">
+        <div class="example-large-box mat-elevation-z4">
+            <app-heat-index-calculator></app-heat-index-calculator>
+        </div>
+    </mat-tab>
+</mat-tab-group>

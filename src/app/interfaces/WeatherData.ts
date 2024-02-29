@@ -1,4 +1,3 @@
-
 interface CurrentData {
     time: string
     interval: number

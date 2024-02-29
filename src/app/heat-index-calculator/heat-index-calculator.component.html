@@ -1,17 +1,59 @@
 <div>
-  <label for="temperature">Temperature:</label>
-  <input type="number" id="temperature" [(ngModel)]="temperature">
-  <select [(ngModel)]="temperatureUnit">
-    <option value="C">°C</option>
-    <option value="F">°F</option>
-  </select>
+    <form class="example-form" name="temperatureForm">
+        <mat-form-field class="example-full-width">
+            <mat-label>Temperature:</mat-label>
+            <input
+                matInput
+                type="number"
+                id="temperature"
+                name="temperature"
+                [(ngModel)]="temperature"
+            />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <input
+                type="text"
+                placeholder="Scale"
+                aria-label="Number"
+                matInput
+                [formControl]="myControl"
+                [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of options" [value]="option">{{
+                    option
+                }}</mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
 </div>
 <div>
-  <label for="relativeHumidity">Relative Humidity (%):</label>
-  <input type="number" id="relativeHumidity" [(ngModel)]="relativeHumidity">
+    <form class="example-form" name="humidityForm">
+        <mat-form-field class="example-full-width">
+            <mat-label>Relative Humidity (%):</mat-label>
+            <input
+                matInput
+                type="number"
+                id="relativeHumidity"
+                name="relativeHumidity"
+                [(ngModel)]="relativeHumidity"
+            />
+        </mat-form-field>
+    </form>
+    <button mat-raised-button color="primary" (click)="calculateHeatIndex()">
+        Calculate Heat Index
+    </button>
 </div>
-<button (click)="calculateHeatIndex()">Calculate Heat Index</button>
-<div *ngIf="heatIndex !== undefined">
-  <p>Heat Index: {{ heatIndex.toFixed(2) }} {{ temperatureUnit }}</p>
-  <p>Heat Index cannot be calculated for temperatures less than 80°F or 26.7°C.</p>
-</div>
+
+<mat-card *ngIf="heatIndex !== undefined" class="heat-index-card">
+    <mat-card-content>
+        <p class="heat-index-value">
+            Heat Index: {{ heatIndex.toFixed(2) }} {{ temperatureUnit }}
+        </p>
+        <p class="heat-index-info">
+            Heat Index cannot be calculated for temperatures less than 80°F or
+            26.7°C.
+        </p>
+    </mat-card-content>
+</mat-card>

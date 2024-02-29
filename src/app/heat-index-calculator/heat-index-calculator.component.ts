@@ -1,19 +1,41 @@
 import { CommonModule } from '@angular/common'
 import { Component } from '@angular/core'
-import { FormsModule } from '@angular/forms'
-
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { MatCardModule } from '@angular/material/card'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
+import { MatDividerModule } from '@angular/material/divider'
 @Component({
     selector: 'app-heat-index-calculator',
     templateUrl: './heat-index-calculator.component.html',
     styleUrls: ['./heat-index-calculator.component.scss'],
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatDividerModule,
+        MatIconModule,
+        MatCardModule,
+    ],
 })
 export class HeatIndexCalculatorComponent {
     temperature: number = 0
     temperatureUnit: string = 'C' // default to celsius
     relativeHumidity: number = 0
     heatIndex: number | undefined = undefined
+
+    myControl = new FormControl('')
+    options: string[] = ['F', 'C']
 
     calculateHeatIndex(): void {
         if (this.temperatureUnit === 'C') {

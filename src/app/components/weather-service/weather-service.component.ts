@@ -33,16 +33,23 @@ export class WeatherServiceComponent implements OnInit {
         )
     }
 
-    getHistoricalWeather(latitude: number, longitude: number, startDate: string, endDate: string): void {
-      this.weatherService.getHistoricalWeather(latitude, longitude, startDate, endDate).subscribe(
-          (data: WeatherData) => {
-              this.forecastData = data
-              console.log('getHistoricalWeather')
-              console.log(this.forecastData)
-          },
-          (error) => {
-              console.error('Error:', error)
-          },
-      )
-  }
+    getHistoricalWeather(
+        latitude: number,
+        longitude: number,
+        startDate: string,
+        endDate: string,
+    ): void {
+        this.weatherService
+            .getHistoricalWeather(latitude, longitude, startDate, endDate)
+            .subscribe(
+                (data: WeatherData) => {
+                    this.forecastData = data
+                    console.log('getHistoricalWeather')
+                    console.log(this.forecastData)
+                },
+                (error) => {
+                    console.error('Error:', error)
+                },
+            )
+    }
 }

@@ -32,23 +32,24 @@ export class WeatherService {
 
     // last week
     getHistoricalWeather(
-      latitude: number,
-      longitude: number,
-      startDate: string,
-      endDate: string
-  ): Observable<WeatherData> {
-      const params = {
-          latitude: latitude,
-          longitude: longitude,
-          start_date: startDate,
-          end_date: endDate,
-          current: 'relative_humidity_2m',
-          hourly: ['temperature_2m', 'relative_humidity_2m'],
-      }
+        latitude: number,
+        longitude: number,
+        startDate: string,
+        endDate: string,
+    ): Observable<WeatherData> {
+        const params = {
+            latitude: latitude,
+            longitude: longitude,
+            start_date: startDate,
+            end_date: endDate,
+            current: 'relative_humidity_2m',
+            hourly: ['temperature_2m', 'relative_humidity_2m'],
+        }
 
-      return this.http.get<WeatherData>(this.apiUrl, { params }).pipe(
-        map((response: any) => {
-            return response as WeatherData
-        }),
-    )}
+        return this.http.get<WeatherData>(this.apiUrl, { params }).pipe(
+            map((response: any) => {
+                return response as WeatherData
+            }),
+        )
+    }
 }

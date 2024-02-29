@@ -1,23 +1,23 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core'
-import { WeatherService } from '../weather-service/weather.service'
-import { WeatherData } from '../../interfaces/WeatherData'
-import { MatTableDataSource } from '@angular/material/table'
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
-import { MatSort } from '@angular/material/sort'
+import { MatTabsModule } from '@angular/material/tabs'
+import { WeatherTableComponent } from '../components/weather-table/weather-table.component'
+import { LineChartComponent } from '../components/line-chart/line-chart.component'
+import { WeatherService } from '../components/weather-service/weather.service'
+import { WeatherData } from '../interfaces/WeatherData'
 import { CommonModule } from '@angular/common'
-import { MatTableModule } from '@angular/material/table'
 import { FormsModule } from '@angular/forms'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
-import { LineChartComponent } from '../line-chart/line-chart.component'
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
+import { MatSort } from '@angular/material/sort'
+import { MatTableDataSource, MatTableModule } from '@angular/material/table'
+import { HeatIndexCalculatorComponent } from '../heat-index-calculator/heat-index-calculator.component'
 
 @Component({
-    selector: 'app-weather-table',
-    templateUrl: './weather-table.component.html',
-    styleUrls: ['./weather-table.component.scss'],
+    selector: 'app-my-tabs',
     standalone: true,
     imports: [
-        CommonModule,
+        MatTabsModule,
         FormsModule,
         MatInputModule,
         MatFormFieldModule,
@@ -26,17 +26,19 @@ import { LineChartComponent } from '../line-chart/line-chart.component'
         MatPaginator,
         MatPaginatorModule,
         MatTableModule,
+        CommonModule,
+        WeatherTableComponent,
         LineChartComponent,
+        HeatIndexCalculatorComponent,
     ],
+    templateUrl: './my-tabs.component.html',
+    styleUrl: './my-tabs.component.scss',
 })
-export class WeatherTableComponent implements OnInit {
-    //@Input() pageSize: number = 5
-    pageSize: number = 5 // Set default page size to 5
+export class MyTabsComponent implements OnInit {
+    pageSize: number = 5
     @Input() searchText: string = ''
     forecastData: WeatherData | undefined
-    filteredForecastData: MatTableDataSource<any> = new MatTableDataSource<any>(
-        [],
-    )
+
     displayedColumns: string[] = [
         'datetime',
         'temperature',
@@ -50,6 +52,9 @@ export class WeatherTableComponent implements OnInit {
     labels: string[] = []
     lineChartOptions: any = {}
     lineChartLegend: boolean = true
+    filteredForecastData: MatTableDataSource<any> = new MatTableDataSource<any>(
+        [],
+    )
 
     @ViewChild(MatPaginator) paginator!: MatPaginator
     @ViewChild(MatSort) sort!: MatSort
@@ -61,15 +66,6 @@ export class WeatherTableComponent implements OnInit {
         this.getWeatherForecast(52.52, 13.41)
         this.getHistoricalWeather(52.52, 13.41, '2024-02-13', '2024-02-27')
         this.extractChartData()
-    }
-
-    ngAfterViewInit(): void {
-        if (this.paginator) {
-            this.filteredForecastData.paginator = this.paginator
-            this.filteredForecastData.paginator.pageSize = this.pageSize
-        } else {
-            // Handle the case where paginator is not yet available
-        }
     }
 
     getWeatherForecast(latitude: number, longitude: number): void {
