@@ -23,7 +23,7 @@
         "@angular/platform-browser-dynamic": "^17.2.0",
         "@angular/platform-server": "^20.3.0",
         "@angular/router": "^17.2.0",
-        "@angular/ssr": "^20.3.0",
+        "@angular/ssr": "^20.3.6",
         "@types/chart.js": "^2.9.41",
         "chart.js": "^4.4.2",
         "express": "^4.21.2",
